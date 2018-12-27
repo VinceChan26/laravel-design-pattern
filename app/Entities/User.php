@@ -16,6 +16,8 @@ class User extends Model
      */
     protected $fillable = ['name', 'email'];
 
+    protected $appends = ['name_mail'];
+
     /**
      * @param $query
      *
@@ -24,5 +26,10 @@ class User extends Model
     public function scopeShow($query)
     {
         return $query->select('id', 'name', 'email');
+    }
+
+    public function getNameMailAttribute($query)
+    {
+        return $this->name . '&' . $this->email;
     }
 }

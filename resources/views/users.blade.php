@@ -12,6 +12,7 @@
                 <td>No.</td>
                 <td>Name</td>
                 <td>E-mail</td>
+                <td>Name & Mail</td>
             </tr>
             <tbody>
                 @foreach ($data as $value)
@@ -19,6 +20,7 @@
                         <td>{{ $value->id }}</td>
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->email }}</td>
+                        <td>{{ $value->name_mail }}</td>
                     </tr>
                 @endforeach
             </tbody>
