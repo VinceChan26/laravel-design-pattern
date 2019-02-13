@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Entities\User;
-use App\Repositories\SharedRepository;
 
 /**
  * Class UserRepository

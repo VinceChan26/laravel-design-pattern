@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\UserService;
+use App\Repositories\UserRepository;
 use Validator;
 
 /**
@@ -13,16 +13,16 @@ use Validator;
  */
 class UserController extends Controller
 {
-    protected $userService;
+    protected $userRepository;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->userService = $userService;
+        $this->userRepository = $userRepository;
     }
 
     public function index()
     {
-        $list = $this->userService->getList(7);
+        $list = $this->userRepository->list(7);
         return view('users', [
             'data' => $list,
         ]);
@@ -39,7 +39,7 @@ class UserController extends Controller
             abort(404);
         }
 
-        $data = $this->userService->getData($request->only(['id']));
+        $data = $this->userRepository->getData($request->only(['id']));
 
         return view('users', [
             'data' => $data,
