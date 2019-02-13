@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\UserRepository;
+use Faker\Factory as Faker;
 
 /**
  * Class UserService
@@ -11,38 +11,82 @@ use App\Repositories\UserRepository;
  */
 class UserService
 {
-    /**
-     * @var UserRepository
-     */
-    protected $userRepository;
+    protected $fake;
 
     /**
      * UserService constructor.
-     *
-     * @param UserRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(Faker $fake)
     {
-        $this->userRepository = $userRepository;
+        $this->fake = $fake::create();
     }
 
     /**
      * @param $limit
      *
-     * @return mixed
+     * @return array
      */
     public function getList($limit)
     {
-        return $this->userRepository->list($limit);
+
+        $fakerArray = [];
+        for ($num = 0; $num < $limit; $num++) {
+            $name = $this->fakeName();
+            $mail = $this->fakeMail();
+
+            $fakerArray[] = (object) [
+                'id' => $this->fakeNumber(1, mt_rand()),
+                'name' => $name,
+                'email' => $mail,
+                'name_mail' => $name . ' & ' . $mail,
+            ];
+        }
+        return $fakerArray;
     }
 
     /**
      * @param $id
      *
-     * @return mixed
+     * @return object
      */
     public function getData($id)
     {
-        return $this->userRepository->getData($id);
+        $name = $this->fakeName();
+        $mail = $this->fakeMail();
+
+        $array[] = (object) [
+            'id' => $id['id'],
+            'name' => $name,
+            'email' => $mail,
+            'name_mail' => $name . ' & ' . $mail,
+        ];
+        return $array;
+    }
+
+    /**
+     * @param $min
+     * @param $max
+     *
+     * @return int
+     */
+    private function fakeNumber($min, $max)
+    {
+        return $this->fake->numberBetween($min, $max);
+    }
+
+    /**
+     * @return string
+     */
+    private function fakeName()
+    {
+        return $this->fake->name;
+    }
+
+    /**
+     * @return string
+     */
+    private function fakeMail()
+    {
+        return $this->fake->email;
     }
 }

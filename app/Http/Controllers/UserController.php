@@ -33,7 +33,7 @@ class UserController extends Controller
     {
         $request['id'] = $id;
         $validate = Validator::make($request->all(), [
-            'id' => 'required|exists:users,id',
+            'id' => 'required',
         ]);
         if ($validate->fails()) {
             abort(404);
